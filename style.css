@@ -1,0 +1,166 @@
+.game {
+  position: relative;
+  width: 480px;
+  height: 360px;
+  overflow: hidden;
+
+  .bg {
+      height: 100%;
+      background-image: url(/images/univer1.png);
+      animation: bgAnimate 3s ease-in-out infinite;
+  }
+
+  .myPlane {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 10px;
+      margin: auto;
+  }
+
+  .bullet {
+      position: absolute;
+      width: 24px;
+      height: 25px;
+      left: 0;
+      right: 0;
+      margin: auto;
+      bottom: 70px;
+      animation: bnAni 1s 1 linear forwards;
+  }
+
+  .enemy {
+      position: absolute;
+      width: 88px;
+      height: 64px;
+      left: 0;
+      right: 0;
+      margin: auto;
+      top: -70px;
+      /* left: 200px; */
+      animation: enemyAni 4s 1 linear forwards;
+  }
+
+  .score {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      color: red;
+  }
+
+  .explo {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      width: 128px;
+      height: 128px;
+      background-image: url(/images/explosion/explo-0.png);
+      animation: explosion 2s 1 step-start forwards;
+  }
+}
+
+@keyframes bnAni {
+  0% {
+      bottom: 70px;
+  }
+
+  100% {
+      bottom: 330px;
+  }
+}
+
+@keyframes enemyAni {
+  0% {
+      top: -70px;
+  }
+
+  100% {
+      top: 400px;
+  }
+}
+
+@keyframes bgAnimate {
+  0% {
+      background-image: url(/images/univer1.png);
+  }
+
+  50% {
+      background-image: url(/images/univer2.png);
+  }
+
+  100% {
+      background-image: url(/images/univer1.png);
+  }
+}
+
+@keyframes explosion {
+  0% {
+      background-position: -1px -1px;
+  }
+
+  6.25% {
+      background-position: -131px -1px;
+  }
+
+  12.5% {
+      background-position: -261px -1px;
+  }
+
+  18.75% {
+      background-position: -391px -1px;
+  }
+
+  25% {
+      background-position: -521px -1px;
+  }
+
+  31.25% {
+      background-position: -651px -1px;
+  }
+
+  37.5% {
+      background-position: -781px -1px;
+  }
+
+  43.75% {
+      background-position: -911px -1px;
+  }
+
+  50% {
+      background-position: -1041px -1px;
+  }
+
+  56.25% {
+      background-position: -1171px -1px;
+  }
+
+  62.5% {
+      background-position: -1301px -1px;
+  }
+
+  68.75% {
+      background-position: -1431px -1px;
+  }
+
+  75% {
+      background-position: -1561px -1px;
+  }
+
+  81.25% {
+      background-position: -1691px -1px;
+  }
+
+  87.5% {
+      background-position: -1821px -1px;
+  }
+
+  93.75% {
+      background-position: -1821px -1px;
+  }
+
+  100% {
+      background-position: -1821px -1px;
+  }
+}

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div class="game">
+        <div class="bg"></div>
+        <img src="/images/plane1.png" alt="" class="myPlane">
+        <div class="score"></div>
+    </div>
+    <script>
+        // 飛機的預設位置（正中間）
+        let x = 0
+        // 子彈
+        let bn = 0
+        // 敵機
+        let en = 0
+        // 爆炸
+        let exploNum = 0
+        // 鍵盤物件
+        let keysPressed = {}
+        // 發射間隔
+        let canShoot = true
+        // 分數
+        let score = 0
+
+
+        $(window).on("keyup", (e) => {
+            delete keysPressed[e.which]
+        }).on("keydown", (e) => {
+            keysPressed[e.which] = true
+        })
+
+        gameLoop()
+        setEnemy()
+
+        setInterval(() => {
+            setEnemy()
+        }, 600)
+
+
+        // 生成會移動的敵機
+        function setEnemy() {
+            // Meth.floor() 無條件捨去, Math.random() 隨機0-1的數字(含小數)
+            let posiX = (Math.floor(Math.random() * 5) - 2) * 180
+
+            en++
+
+            let template = `
+                <div class="enemy enemy${en}">
+                    <img src="/images/plane2.png" alt="">
+                </div>`
+            $(".game").append(template)
+            $(".game .enemy" + en).css("left", posiX)
+        }
+
+        // 持續執行子彈跟敵機
+        function gameLoop() {
+            // console.log(keysPressed)
+            if (keysPressed[37]) {
+                x = (x > -400) ? x - 10 : -400
+                $(".myPlane").css("left", x)
+                console.log($(".myPlane"))
+            }
+            if (keysPressed[39]) {
+                x = (x < 400) ? x + 10 : 400
+                $(".myPlane").css("left", x)
+            }
+            if (keysPressed[32]) {
+                // 發射子彈
+                if (canShoot === true) {
+                    canShoot = false
+                    bn++
+                    let template =
+                        `<div class="bullet bullet${bn}">
+                            <img src="/images/bullet1.png" alt="">
+                        </div>`
+                    $(".game").append(template)
+                    $(".game .bullet" + bn).css("left", x)
+
+
+                    $(".bullet").each((index, elm) => {
+                        let $bn = $(elm)
+                        $(".enemy").each((index, elm) => {
+                            let $enemy = $(elm)
+                            if (isOverLap($bn, $enemy)) {
+                                // 取得敵機的位置
+                                let exploX = $enemy.css("left")
+                                let exploY = $enemy.css("top")
+
+                                $bn.remove()
+                                $enemy.remove()
+
+                                exploNum++
+                                // 幫敵機各別生成爆炸
+                                let template = `<div class="explo explo${exploNum}"></div>`
+
+                                // 把爆炸效果加到遊戲畫面內
+                                $(".game").append(template)
+                                // 幫爆炸效果加上流水號，並設定在跟敵機相同的位置
+                                $(".game .explo" + exploNum).css("left", exploX)
+                                $(".game .explo" + exploNum).css("top", exploY)
+                                // 監聽"動畫結束", 將爆炸從html當中移除, 不然會有一堆爆炸的html
+                                $(".game .explo" + exploNum).on("animationend", function () {
+                                    $(this).remove()
+                                })
+
+                                // 分數
+                                score++
+                                $(".score").text(score)
+                            }
+                        })
+                    })
+
+                    // 隔一段時間才能再發射子彈
+                    setTimeout(() => {
+                        canShoot = true
+                    }, 120)
+                }
+            }
+            // 迴圈重點
+            requestAnimationFrame(gameLoop)
+        }
+
+        $(".game").on("animationend", (e) => {
+            if ($(e.target).has(".enemy") || $(e.target).has(".bullet")) {
+                $(e.target).remove()
+            }
+        })
+
+        // 判斷子彈有沒有跟敵機重疊
+        let isOverLap = ($div, $div2) => {
+            // 取得矩形當前的位置座標
+            let x1 = $div.offset().left
+            let y1 = $div.offset().top
+            
+            // 取得矩形的外部寬高
+            let w1 = $div.outerWidth()
+            let h1 = $div.outerHeight()
+
+            let x2 = $div2.offset().left
+            let y2 = $div2.offset().top
+            let w2 = $div2.outerWidth()
+            let h2 = $div2.outerHeight()
+
+            // 可視化判斷
+            if (x1 < x2 + w2 &&
+                x1 + w1 > x2 &&
+                y1 < y2 + h2 &&
+                y1 + h1 > y2
+            ) {
+                // console.log("重疊")
+                return true
+
+            } else {
+                // console.log("沒重疊")
+                return false
+            }
+        }
+    </script>
+
+</body>
+
+</html>
