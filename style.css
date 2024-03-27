@@ -6,7 +6,7 @@
 
   .bg {
       height: 100%;
-      background-image: url(/images/univer1.png);
+      background-image: url(images/univer1.png);
       animation: bgAnimate 3s ease-in-out infinite;
   }
 
@@ -56,7 +56,7 @@
       margin: auto;
       width: 128px;
       height: 128px;
-      background-image: url(/images/explosion/explo-0.png);
+      background-image: url(images/explosion/explo-0.png);
       animation: explosion 2s 1 step-start forwards;
   }
 }
@@ -83,15 +83,15 @@
 
 @keyframes bgAnimate {
   0% {
-      background-image: url(/images/univer1.png);
+      background-image: url(images/univer1.png);
   }
 
   50% {
-      background-image: url(/images/univer2.png);
+      background-image: url(images/univer2.png);
   }
 
   100% {
-      background-image: url(/images/univer1.png);
+      background-image: url(images/univer1.png);
   }
 }
 
