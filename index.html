@@ -17,7 +17,7 @@
 <body>
     <div class="game">
         <div class="bg"></div>
-        <img src="/images/plane1.png" alt="" class="myPlane">
+        <img src="images/plane1.png" alt="" class="myPlane">
         <div class="score"></div>
     </div>
     <script>
@@ -60,7 +60,7 @@
 
             let template = `
                 <div class="enemy enemy${en}">
-                    <img src="/images/plane2.png" alt="">
+                    <img src="images/plane2.png" alt="">
                 </div>`
             $(".game").append(template)
             $(".game .enemy" + en).css("left", posiX)
@@ -85,7 +85,7 @@
                     bn++
                     let template =
                         `<div class="bullet bullet${bn}">
-                            <img src="/images/bullet1.png" alt="">
+                            <img src="images/bullet1.png" alt="">
                         </div>`
                     $(".game").append(template)
                     $(".game .bullet" + bn).css("left", x)
